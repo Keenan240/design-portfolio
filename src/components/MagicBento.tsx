@@ -331,7 +331,7 @@ const ParticleCard = ({
 };
 
 interface GlobalSpotlightProps {
-  gridRef: React.RefObject<HTMLDivElement | null>;
+  gridRef: React.RefObject<HTMLDivElement>;
   disableAnimations?: boolean;
   enabled?: boolean;
   spotlightRadius?: number;
@@ -467,7 +467,7 @@ const GlobalSpotlight = ({
   return null;
 };
 
-const BentoCardGrid = ({ children, gridRef }: { children: React.ReactNode; gridRef: React.RefObject<HTMLDivElement | null> }) => (
+const BentoCardGrid = ({ children, gridRef }: { children: React.ReactNode; gridRef: React.RefObject<HTMLDivElement> }) => (
   <div
     className="bento-section grid gap-2 p-3 w-full max-w-full select-none relative"
     style={{ fontSize: 'clamp(1rem, 0.9rem + 0.5vw, 1.5rem)' }}
