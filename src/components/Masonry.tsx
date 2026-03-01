@@ -26,7 +26,7 @@ const useMedia = (
   return value;
 };
 
-const useMeasure = (): [React.RefObject<HTMLDivElement | null>, { width: number; height: number }] => {
+const useMeasure = (): [React.RefObject<HTMLDivElement>, { width: number; height: number }] => {
   const ref = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
 
