@@ -445,20 +445,20 @@ const ScrollStack = ({
     useWindowScroll,
   ]);
 
-  const containerStyles = useWindowScroll
+  const containerStyles: React.CSSProperties = useWindowScroll
     ? {
-        overscrollBehavior: "contain" as const,
-        WebkitOverflowScrolling: "touch",
+        overscrollBehavior: "contain",
+        WebkitOverflowScrolling: "touch" as React.CSSProperties["WebkitOverflowScrolling"],
         WebkitTransform: "translateZ(0)",
         transform: "translateZ(0)",
       }
     : {
-        overscrollBehavior: "contain" as const,
-        WebkitOverflowScrolling: "touch",
-        scrollBehavior: "smooth" as const,
+        overscrollBehavior: "contain",
+        WebkitOverflowScrolling: "touch" as React.CSSProperties["WebkitOverflowScrolling"],
+        scrollBehavior: "smooth",
         WebkitTransform: "translateZ(0)",
         transform: "translateZ(0)",
-        willChange: "scroll-position" as const,
+        willChange: "scroll-position",
       };
 
   const containerClassName = useWindowScroll
