@@ -7,7 +7,7 @@ interface CaseStudyInfoProps {
 export default function CaseStudyInfo({ project }: CaseStudyInfoProps) {
   return (
     <section className="pt-8 pb-20">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-0">
+      <div className="w-full max-w-none px-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Top Row: Role and Timeline */}
           <div className="bg-[#f5f5f5] rounded-[25px] p-8 border border-[#ededed]">

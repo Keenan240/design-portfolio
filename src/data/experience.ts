@@ -6,9 +6,9 @@ export interface ExperienceItem {
 
 export const experience: ExperienceItem[] = [
   {
-    company: "dream company",
-    role: "design engineer",
-    year: "hopefully soon ;)",
+    company: "Scotiabank",
+    role: "UX Designer",
+    year: "2026",
   },
   {
     company: "Scotiabank",
@@ -24,9 +24,9 @@ export const experience: ExperienceItem[] = [
 
 export const sideStuff: ExperienceItem[] = [
   {
-    company: "???",
-    role: "???",
-    year: "TBD",
+    company: "QTMA",
+    role: "Project Manager",
+    year: "2026-27",
   },
   {
     company: "Cansbridge Scholar",

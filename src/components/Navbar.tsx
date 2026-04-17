@@ -45,82 +45,107 @@ export default function Navbar() {
     };
   }, [isContactOpen]);
 
+  const linkClass =
+    "inline-flex h-5 items-center text-sm font-medium uppercase leading-none text-black transition-colors hover:text-[#4a4a4a]";
+
   return (
     <>
-    <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center p-8">
-      <div
-        ref={contactRef}
-        className="relative flex gap-8 bg-white/80 backdrop-blur-md px-6 py-3 rounded-full border border-gray-200 shadow-sm"
-      >
-        <Link href="/" className="text-sm font-medium hover:text-gray-600 transition-colors">
-          Home
-        </Link>
-        <Link href="/about" className="text-sm font-medium hover:text-gray-600 transition-colors">
-          About
-        </Link>
-        <button
-          type="button"
-          className="text-sm font-medium hover:text-gray-600 transition-colors"
-          onClick={() => setIsContactOpen((open) => !open)}
-          aria-haspopup="menu"
-          aria-expanded={isContactOpen}
-        >
-          Contact
-        </button>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white">
+        <div className="mx-auto grid max-w-[1480px] grid-cols-[1fr_auto_1fr] items-center gap-y-4 px-4 py-6 md:px-8">
+          <Link
+            href="/"
+            className="justify-self-start text-base font-medium lowercase text-black transition-colors hover:text-[#4a4a4a]"
+          >
+            keenan yang :p
+          </Link>
 
-        {isContactOpen && (
-          <div className="contact-dropdown-appear absolute right-0 top-full mt-3 w-56 rounded-xl border border-gray-200 bg-white shadow-lg p-3 flex flex-col gap-2">
-            <button
-              type="button"
-              onClick={copyEmail}
-              className="flex w-full items-center justify-between rounded-md px-2 py-2 hover:bg-gray-50 text-sm font-medium text-gray-800 text-left"
-            >
-              <span className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-black" />
-                <span>Email</span>
-              </span>
-              <ChevronRight className="h-4 w-4 text-gray-400 shrink-0" />
-            </button>
+          <div className="col-start-2 flex items-center justify-center gap-6 md:gap-10">
+            <Link href="/about" className={linkClass}>
+              About
+            </Link>
+
+            <div ref={contactRef} className="relative">
+              <button
+                type="button"
+                className={`${linkClass} appearance-none bg-transparent p-0`}
+                onClick={() => setIsContactOpen((open) => !open)}
+                aria-haspopup="menu"
+                aria-expanded={isContactOpen}
+              >
+                Contact
+              </button>
+
+              {isContactOpen && (
+                <div
+                  className="absolute left-1/2 top-full z-50 mt-3 w-56 -translate-x-1/2"
+                  role="presentation"
+                >
+                  <div className="contact-dropdown-appear flex flex-col gap-2 rounded-xl border border-gray-200 bg-white p-3 shadow-lg">
+                  <button
+                    type="button"
+                    onClick={copyEmail}
+                    className="flex w-full items-center justify-between rounded-md px-2 py-2 text-left text-sm font-medium text-gray-800 hover:bg-gray-50"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-black" />
+                      <span>Email</span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-gray-400" />
+                  </button>
+                  <a
+                    href="https://www.linkedin.com/feed/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between rounded-md px-2 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50"
+                    onClick={() => setIsContactOpen(false)}
+                  >
+                    <span className="flex items-center gap-2">
+                      <Linkedin className="h-4 w-4 text-black" />
+                      <span>LinkedIn</span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 text-gray-400" />
+                  </a>
+                  <a
+                    href="https://github.com/Keenan240"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between rounded-md px-2 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50"
+                    onClick={() => setIsContactOpen(false)}
+                  >
+                    <span className="flex items-center gap-2">
+                      <Github className="h-4 w-4 text-black" />
+                      <span>GitHub</span>
+                    </span>
+                    <ChevronRight className="h-4 w-4 text-gray-400" />
+                  </a>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <a
-              href="https://www.linkedin.com/feed/"
+              href="https://docs.google.com/document/d/10qlqZVFDV_D6MUNa9RuC4EwqFTjKMolasIogbjmZ1xc/edit?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between rounded-md px-2 py-2 hover:bg-gray-50 text-sm font-medium text-gray-800"
-              onClick={() => setIsContactOpen(false)}
+              className={linkClass}
             >
-              <span className="flex items-center gap-2">
-                <Linkedin className="h-4 w-4 text-black" />
-                <span>LinkedIn</span>
-              </span>
-              <ChevronRight className="h-4 w-4 text-gray-400" />
-            </a>
-            <a
-              href="https://github.com/Keenan240"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between rounded-md px-2 py-2 hover:bg-gray-50 text-sm font-medium text-gray-800"
-              onClick={() => setIsContactOpen(false)}
-            >
-              <span className="flex items-center gap-2">
-                <Github className="h-4 w-4 text-black" />
-                <span>GitHub</span>
-              </span>
-              <ChevronRight className="h-4 w-4 text-gray-400" />
+              Resume
             </a>
           </div>
-        )}
-      </div>
-    </nav>
 
-    {showCopiedToast && (
-      <div
-        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] rounded-lg bg-gray-900 text-white px-4 py-2.5 text-sm font-medium shadow-lg"
-        role="status"
-        aria-live="polite"
-      >
-        Copied Email
-      </div>
-    )}
+          <div aria-hidden="true" />
+        </div>
+      </nav>
+
+      {showCopiedToast && (
+        <div
+          className="fixed bottom-8 left-1/2 z-[100] -translate-x-1/2 rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-medium text-white shadow-lg"
+          role="status"
+          aria-live="polite"
+        >
+          Copied Email
+        </div>
+      )}
     </>
   );
 }

@@ -1,6 +1,8 @@
 "use client";
 
-import { motion, HTMLMotionProps } from "framer-motion";
+import { motion, HTMLMotionProps, useReducedMotion } from "framer-motion";
+
+const smoothEase = [0.16, 1, 0.3, 1] as const;
 
 interface FadeInProps extends HTMLMotionProps<"div"> {
   direction?: "up" | "down" | "left" | "right";
@@ -14,17 +16,19 @@ export default function FadeIn({
   className,
   ...props
 }: FadeInProps) {
+  const reduceMotion = useReducedMotion();
+
   const directions = {
-    up: { y: 20 },
-    down: { y: -20 },
-    left: { x: 20 },
-    right: { x: -20 },
+    up: { y: reduceMotion ? 0 : 26 },
+    down: { y: reduceMotion ? 0 : -26 },
+    left: { x: reduceMotion ? 0 : 26 },
+    right: { x: reduceMotion ? 0 : -26 },
   };
 
   return (
     <motion.div
       initial={{
-        opacity: 0,
+        opacity: reduceMotion ? 1 : 0,
         ...(direction ? directions[direction] : {}),
       }}
       whileInView={{
@@ -32,11 +36,11 @@ export default function FadeIn({
         x: 0,
         y: 0,
       }}
-      viewport={{ once: true, margin: "-100px" }}
+      viewport={{ once: true, margin: "-80px 0px -12% 0px" }}
       transition={{
-        duration: 0.7,
-        delay: delay,
-        ease: [0.21, 0.47, 0.32, 0.98],
+        duration: reduceMotion ? 0 : 0.88,
+        delay: reduceMotion ? 0 : delay,
+        ease: smoothEase,
       }}
       className={className}
       {...props}

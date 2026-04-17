@@ -1,121 +1,169 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import HomeIntroOverlay from "@/components/HomeIntroOverlay";
+import { useMemo, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import ProjectCard from "@/components/ProjectCard";
 import FadeIn from "@/components/FadeIn";
-import { projects } from "@/data/projects";
+import {
+  projects,
+  type PortfolioCategory,
+} from "@/data/projects";
+
+const smoothEase = [0.16, 1, 0.3, 1] as const;
 
 export default function HomePageWithIntro() {
-  const [introDone, setIntroDone] = useState(false);
+  const [category, setCategory] = useState<PortfolioCategory>("product");
+  const reduceMotion = useReducedMotion();
+
+  const filtered = useMemo(
+    () => projects.filter((p) => p.portfolioCategory === category),
+    [category],
+  );
+
+  const heroContainer = {
+    hidden: {},
+    visible: {
+      transition: reduceMotion
+        ? { staggerChildren: 0, delayChildren: 0 }
+        : { staggerChildren: 0.11, delayChildren: 0.06 },
+    },
+  };
+
+  const heroItem = {
+    hidden: reduceMotion
+      ? { opacity: 1, y: 0 }
+      : { opacity: 0, y: 32 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: reduceMotion ? 0 : 0.92,
+        ease: smoothEase,
+      },
+    },
+  };
+
+  const panelTransition = reduceMotion
+    ? { duration: 0 }
+    : { duration: 0.55, ease: smoothEase };
 
   return (
-    <div className="relative">
-      <HomeIntroOverlay onComplete={() => setIntroDone(true)} />
-
+    <div className="min-h-screen">
       <motion.div
-        className="hidden sm:block absolute z-0 top-32 left-10 md:top-40 md:left-40 w-[320px] md:w-[420px]"
-        initial={{ opacity: 0, y: 24, rotate: -10 }}
-        animate={
-          introDone
-            ? { opacity: 1, y: 0, rotate: -10 }
-            : { opacity: 0, y: 24, rotate: -10 }
-        }
-        transition={{
-          duration: 0.45,
-          ease: [0.21, 0.47, 0.32, 0.98],
-          delay: 0.1,
-        }}
+        className="mx-auto max-w-[1280px] px-4 md:px-8"
+        variants={heroContainer}
+        initial="hidden"
+        animate="visible"
       >
-        <img
-          src="/top-artists-card.png"
-          alt="Top artists card detail"
-          className="w-full rounded-2xl shadow-lg"
-        />
-        <motion.img
-          src="/valorant-character.png"
-          alt=""
-          aria-hidden
-          className="absolute -bottom-28 -left-12 w-24 md:w-36 object-contain"
-          initial={{ opacity: 0 }}
-          animate={introDone ? { opacity: 1 } : { opacity: 0 }}
-          transition={{
-            duration: 0.35,
-            ease: "easeOut",
-            delay: 0.25,
-          }}
-        />
+        <section className="flex flex-col items-center pt-[252px] text-center md:pt-[284px]">
+          <motion.h1
+            variants={heroItem}
+            className="max-w-4xl text-[clamp(2.25rem,7vw,3.75rem)] font-semibold leading-[1.08] tracking-[-0.07em] text-black"
+          >
+            Building from Zero
+          </motion.h1>
+          <motion.p
+            variants={heroItem}
+            className="mt-7 max-w-xl text-base leading-relaxed text-[#ACACAC] md:text-lg"
+          >
+            Currently at{" "}
+            <span className="font-semibold text-[#ACACAC]">Scotiabank</span>
+          </motion.p>
+          <motion.p
+            variants={heroItem}
+            className="mt-0 max-w-xl text-base leading-relaxed text-[#ACACAC] md:text-lg"
+          >
+            Always{" "}
+            <span className="font-semibold text-[#ACACAC]">
+              building something new
+            </span>
+          </motion.p>
+        </section>
+
+        <motion.div
+          variants={heroItem}
+          className="mt-[200px] flex justify-center pb-14 md:pb-20"
+        >
+          <div
+            className="relative inline-flex rounded-full bg-[#ececec] p-1"
+            role="tablist"
+            aria-label="Work category"
+          >
+            <button
+              type="button"
+              role="tab"
+              aria-selected={category === "product"}
+              onClick={() => setCategory("product")}
+              className="relative min-w-[132px] rounded-full py-2.5 text-sm font-medium text-black md:min-w-[148px]"
+            >
+              {category === "product" && (
+                <motion.span
+                  layoutId="home-category-pill"
+                  className="absolute inset-0 z-0 rounded-full bg-white shadow-sm"
+                  transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                />
+              )}
+              <span className="relative z-10">Products</span>
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={category === "side"}
+              onClick={() => setCategory("side")}
+              className="relative min-w-[132px] rounded-full py-2.5 text-sm font-medium text-black md:min-w-[148px]"
+            >
+              {category === "side" && (
+                <motion.span
+                  layoutId="home-category-pill"
+                  className="absolute inset-0 z-0 rounded-full bg-white shadow-sm"
+                  transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                />
+              )}
+              <span className="relative z-10">Side work</span>
+            </button>
+          </div>
+        </motion.div>
       </motion.div>
 
-      <motion.img
-        src="/frame-21-1.svg"
-        alt="Boarding pass card detail"
-        className="hidden sm:block absolute z-0 top-40 right-6 md:top-44 md:right-16 w-[260px] md:w-[320px] rounded-2xl"
-        initial={{ opacity: 0, y: 24, rotate: 10 }}
-        animate={
-          introDone
-            ? { opacity: 1, y: 0, rotate: 10 }
-            : { opacity: 0, y: 24, rotate: 10 }
-        }
-        transition={{
-          duration: 0.45,
-          ease: [0.21, 0.47, 0.32, 0.98],
-          delay: 0.15,
-        }}
-      />
-
-      <motion.img
-        src="/frame-21-2.svg"
-        alt="Boarding pass card detail"
-        className="hidden sm:block absolute z-0 top-56 right-6 md:top-64 md:right-16 w-[260px] md:w-[320px] rounded-2xl"
-        initial={{ opacity: 0, y: 24, rotate: 10 }}
-        animate={
-          introDone
-            ? { opacity: 1, y: 0, rotate: 10 }
-            : { opacity: 0, y: 24, rotate: 10 }
-        }
-        transition={{
-          duration: 0.45,
-          ease: [0.21, 0.47, 0.32, 0.98],
-          delay: 0.2,
-        }}
-      />
-
-      <div className="px-4 md:px-0">
-        <div className="max-w-[1280px] mx-auto">
-          <section className="relative min-h-screen flex items-center justify-center pt-24 pb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={
-              introDone
-                ? { opacity: 1, y: 0 }
-                : { opacity: 0, y: 10 }
-            }
-            transition={{
-              duration: 0.5,
-              ease: [0.21, 0.47, 0.32, 0.98],
-            }}
-            className="relative z-10 -mt-8 flex flex-col items-center gap-2"
+      <AnimatePresence mode="wait">
+        {category === "side" ? (
+          <motion.section
+            key="side"
+            role="tabpanel"
+            aria-label="Side work"
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -14 }}
+            transition={panelTransition}
+            className="mx-auto flex min-h-[520px] w-full max-w-[1393px] items-start justify-center px-4 pb-32 md:min-h-[900px] md:px-0"
           >
-            <h1 className="text-[48px] font-semibold text-black">
-              Keenan Yang
-            </h1>
-            <p className="text-base font-normal text-[#4a4a4a]">
-              Product Design Intern @ Scotiabank
+            <p className="mt-24 text-center text-base text-[#ACACAC] md:text-lg">
+              side work incoming!
             </p>
-          </motion.div>
-          </section>
-
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-[32px] md:gap-[40px] pb-20">
-            {projects.map((project, index) => (
-              <FadeIn key={project.id} delay={index * 0.1}>
+          </motion.section>
+        ) : (
+          <motion.section
+            key="product"
+            role="tabpanel"
+            aria-label="Products"
+            initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -14 }}
+            transition={panelTransition}
+            className="mx-auto box-border grid w-full max-w-[1393px] grid-cols-1 gap-[25px] px-4 pb-24 md:grid-cols-2 md:items-start md:gap-[25px] md:px-0"
+          >
+            {filtered.map((project, index) => (
+              <FadeIn
+                key={project.id}
+                delay={reduceMotion ? 0 : 0.06 + index * 0.09}
+                className="min-w-0 w-full"
+              >
                 <ProjectCard project={project} />
               </FadeIn>
             ))}
-          </section>
-        </div>
-      </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
