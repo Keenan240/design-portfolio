@@ -135,11 +135,17 @@ export default function HomePageWithIntro() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -14 }}
             transition={panelTransition}
-            className="mx-auto flex min-h-[520px] w-full max-w-[1393px] items-start justify-center px-4 pb-32 md:min-h-[900px] md:px-0"
+            className="mx-auto box-border grid w-full max-w-[1393px] grid-cols-1 gap-[25px] px-4 pb-24 md:grid-cols-2 md:items-start md:gap-[25px] md:px-0"
           >
-            <p className="mt-24 text-center text-base text-[#ACACAC] md:text-lg">
-              side work incoming!
-            </p>
+            {filtered.map((project, index) => (
+              <FadeIn
+                key={project.id}
+                delay={reduceMotion ? 0 : 0.06 + index * 0.09}
+                className="min-w-0 w-full"
+              >
+                <ProjectCard project={project} />
+              </FadeIn>
+            ))}
           </motion.section>
         ) : (
           <motion.section

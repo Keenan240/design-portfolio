@@ -27,12 +27,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const showCaseStudyLabel =
     project.id === "nucleus" ||
     project.id === "trax";
-  const projectYear =
-    isScotia || isTrevo
+  const cornerHoverLabel =
+    project.cardHoverLabel ??
+    (isScotia || isTrevo
       ? "Coming Soon"
       : project.id === "nucleus" || project.id === "trax"
         ? "2025"
-        : "";
+        : "");
   const hoverAccent = hexToRgba(project.hoverAccent, 0.28);
   const imageClassName = isCompactMockup
     ? `relative z-10 w-[240px] h-auto object-contain transition-transform duration-300 group-hover:scale-[0.97] ${isTrevo ? "rounded-[40px]" : ""}`
@@ -69,13 +70,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           Case Study
         </span>
       )}
-      {projectYear && (
+      {cornerHoverLabel && (
         <span
           className={`absolute bottom-[10px] right-[10px] z-20 bg-white px-[6px] py-[4px] text-[14px] tracking-[-0.07em] opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
             isScotia || isTrevo ? "text-[#ACACAC]" : "text-black"
           }`}
         >
-          {projectYear}
+          {cornerHoverLabel}
         </span>
       )}
     </motion.div>

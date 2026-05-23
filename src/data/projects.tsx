@@ -36,6 +36,8 @@ export interface Project {
   overview: string;
   /** Optional short description for the home page card. If omitted, overview is used. */
   cardOverview?: string;
+  /** Bottom-right hover label on the card image (e.g. year or "Open project"). */
+  cardHoverLabel?: string;
   overviewVideo?: string;
   sections: CaseStudySection[];
 }
@@ -138,6 +140,31 @@ export const projects: Project[] = [
         content: "This project highlighted the impact of small UX improvements on overall user satisfaction in high-utility systems."
       }
     ]
+  },
+  {
+    id: "badgein",
+    title: "BadgeIn",
+    hoverAccent: "#2563EB",
+    portfolioCategory: "side",
+    image: "/projects/badgein-home.png",
+    link: "https://badge-in.vercel.app/",
+    role: "Design & Engineering",
+    timeline: "2026",
+    team: [],
+    skills: ["Product Design", "Next.js", "Print layout"],
+    overview:
+      "A lightweight badge generator for networking events that includes your guest's personal LinkedIn QR codes.",
+    cardOverview:
+      "A lightweight badge generator for networking events that includes your guest's personal LinkedIn QR codes.",
+    cardHoverLabel: "Open project",
+    sections: [
+      {
+        id: "overview",
+        title: "Overview",
+        content:
+          "BadgeIn turns a guest-list CSV into print-ready badges with LinkedIn QR codes. Open the live project for the full experience.",
+      },
+    ],
   },
   {
     id: "nucleus",

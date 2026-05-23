@@ -17,7 +17,11 @@ export default function CaseStudyPage({ params }: PageProps) {
   const isLockedCaseStudy =
     params.id === "trevo" || params.id === "scotia-itrade-coming-soon";
 
-  if (!project || isLockedCaseStudy) {
+  if (
+    !project ||
+    isLockedCaseStudy ||
+    project.link.startsWith("http")
+  ) {
     notFound();
   }
 
