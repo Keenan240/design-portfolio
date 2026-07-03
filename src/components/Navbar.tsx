@@ -124,7 +124,7 @@ export default function Navbar() {
             </div>
 
             <a
-              href="https://docs.google.com/document/d/10qlqZVFDV_D6MUNa9RuC4EwqFTjKMolasIogbjmZ1xc/edit?usp=sharing"
+              href="https://drive.google.com/file/d/1uYrZIDvmCWKYh3JvYCHVn3PjqbNwPNwm/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className={linkClass}

@@ -17,6 +17,25 @@ function hexToRgba(hex: string, alpha: number): string {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
+function CardLabelArrow() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden
+      className="h-[1em] w-[1em] shrink-0"
+    >
+      <path
+        d="M7 17L17 7M17 7H7M17 7v10"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function ProjectCard({ project }: ProjectCardProps) {
   const isExternal = project.link.startsWith("http");
   const isCaseStudyLocked =
@@ -34,6 +53,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       : project.id === "nucleus" || project.id === "trax"
         ? "2025"
         : "");
+  const showOpenProjectArrow = cornerHoverLabel === "Open project";
   const hoverAccent = hexToRgba(project.hoverAccent, 0.28);
   const imageClassName = isCompactMockup
     ? `relative z-10 w-[240px] h-auto object-contain transition-transform duration-300 group-hover:scale-[0.97] ${isTrevo ? "rounded-[40px]" : ""}`
@@ -66,17 +86,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         />
       )}
       {showCaseStudyLabel && (
-        <span className="absolute bottom-[10px] left-[10px] z-20 bg-white px-[6px] py-[4px] text-[14px] tracking-[-0.07em] text-black opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        <span className="absolute bottom-[10px] left-[10px] z-20 flex items-center gap-[5px] bg-white px-[6px] py-[4px] text-[14px] tracking-[-0.07em] text-black opacity-0 transition-opacity duration-200 group-hover:opacity-100">
           Case Study
+          <CardLabelArrow />
         </span>
       )}
       {cornerHoverLabel && (
         <span
-          className={`absolute bottom-[10px] right-[10px] z-20 bg-white px-[6px] py-[4px] text-[14px] tracking-[-0.07em] opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
+          className={`absolute bottom-[10px] right-[10px] z-20 flex items-center gap-[5px] bg-white px-[6px] py-[4px] text-[14px] tracking-[-0.07em] opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
             isScotia || isTrevo ? "text-[#ACACAC]" : "text-black"
           }`}
         >
           {cornerHoverLabel}
+          {showOpenProjectArrow && <CardLabelArrow />}
         </span>
       )}
     </motion.div>
