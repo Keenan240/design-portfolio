@@ -97,7 +97,7 @@ export default function Navbar() {
                     <ChevronRight className="h-4 w-4 shrink-0 text-gray-400" />
                   </button>
                   <a
-                    href="https://www.linkedin.com/feed/"
+                    href="https://www.linkedin.com/in/keenanyang1027"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-between rounded-md px-2 py-2 text-sm font-medium text-gray-800 hover:bg-gray-50"
