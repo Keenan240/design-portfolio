@@ -64,6 +64,10 @@ export default function Navbar() {
               About
             </Link>
 
+            <Link href="/fun" className={linkClass}>
+              Fun
+            </Link>
+
             <div ref={contactRef} className="relative">
               <button
                 type="button"
@@ -124,7 +128,7 @@ export default function Navbar() {
             </div>
 
             <a
-              href="https://drive.google.com/file/d/1uYrZIDvmCWKYh3JvYCHVn3PjqbNwPNwm/view?usp=sharing"
+              href="https://drive.google.com/file/d/12cYoYvosdePaYkCyQNP4pxC1rpOrG1tp/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className={linkClass}
