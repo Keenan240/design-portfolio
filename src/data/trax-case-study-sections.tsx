@@ -1,6 +1,45 @@
 import React from "react";
 import type { CaseStudySection as ProjectSection } from "@/data/projects";
 
+/** Grey media well that grows with its content. No fixed height clipping. */
+function MediaFrame({
+  label,
+  children,
+  className = "",
+  padClassName = "px-8 pt-10",
+}: {
+  label?: string;
+  children: React.ReactNode;
+  className?: string;
+  padClassName?: string;
+}) {
+  return (
+    <div
+      className={`group relative w-full overflow-hidden bg-[#F5F5F5] ${className}`}
+    >
+      <div
+        className={`flex w-full items-center justify-center ${padClassName} ${
+          label ? "pb-14" : "pb-10"
+        }`}
+      >
+        {children}
+      </div>
+      {label ? (
+        <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
+          {label}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+const mediaImg =
+  "h-auto w-[72%] max-w-full object-contain";
+const mediaImgWide =
+  "h-auto w-[78%] max-w-full object-contain";
+const mediaImgLg =
+  "h-auto w-[65%] max-w-full object-contain";
+
 function TraxDecisionsAndScreensContent() {
   return (
     <>
@@ -12,58 +51,38 @@ function TraxDecisionsAndScreensContent() {
           many items fit in the same viewport.
         </p>
       </div>
-      <div className="mt-10 space-y-[25px] w-full max-w-none">
+      <div className="mt-10 w-full max-w-none space-y-[25px]">
         <div className="grid grid-cols-1 gap-[25px] md:grid-cols-2">
-          <div className="group relative h-[420px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-            <div className="flex h-full w-full items-center justify-center">
-              <img
-                src="/case-study/trax-new-card-grid-old-design.svg"
-                alt="Library card grid old design"
-                className="h-auto w-[92%] max-h-[95%] max-w-full object-contain"
-              />
-            </div>
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-              Old Design
-            </span>
-          </div>
-          <div className="group relative h-[420px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-            <div className="flex h-full w-full items-center justify-center">
-              <img
-                src="/case-study/trax-new-card-grid-new-design.svg"
-                alt="Library card grid new design"
-                className="h-auto w-[92%] max-h-[95%] max-w-full object-contain"
-              />
-            </div>
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-              New Design
-            </span>
-          </div>
+          <MediaFrame label="Old Design">
+            <img
+              src="/case-study/trax-new-card-grid-old-design.svg"
+              alt="Library card grid old design"
+              className={mediaImg}
+            />
+          </MediaFrame>
+          <MediaFrame label="New Design">
+            <img
+              src="/case-study/trax-new-card-grid-new-design.svg"
+              alt="Library card grid new design"
+              className={mediaImg}
+            />
+          </MediaFrame>
         </div>
         <div className="grid grid-cols-1 gap-[25px] md:grid-cols-2">
-          <div className="group relative h-[500px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-            <div className="flex h-full w-full items-center justify-center">
-              <img
-                src="/case-study/trax-new-card-grid-row2-old-design.svg"
-                alt="Library card grid second row old design"
-                className="h-auto w-[92%] max-h-[95%] max-w-full object-contain"
-              />
-            </div>
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-              Old Design
-            </span>
-          </div>
-          <div className="group relative h-[500px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-            <div className="flex h-full w-full items-center justify-center">
-              <img
-                src="/case-study/trax-new-card-grid-row2-new-design.svg"
-                alt="Library card grid second row new design"
-                className="h-auto w-[92%] max-h-[95%] max-w-full object-contain"
-              />
-            </div>
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-              New Design
-            </span>
-          </div>
+          <MediaFrame label="Old Design">
+            <img
+              src="/case-study/trax-new-card-grid-row2-old-design.svg"
+              alt="Library card grid second row old design"
+              className={mediaImg}
+            />
+          </MediaFrame>
+          <MediaFrame label="New Design">
+            <img
+              src="/case-study/trax-new-card-grid-row2-new-design.svg"
+              alt="Library card grid second row new design"
+              className={mediaImg}
+            />
+          </MediaFrame>
         </div>
       </div>
 
@@ -74,50 +93,37 @@ function TraxDecisionsAndScreensContent() {
           where they are in the library.
         </p>
       </div>
-      <div className="mt-10 space-y-[25px] w-full max-w-none">
+      <div className="mt-10 w-full max-w-none space-y-[25px]">
         <div className="grid grid-cols-1 gap-[25px] md:grid-cols-2">
-          <div className="group relative h-[500px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-            <div className="flex h-full w-full items-center justify-center">
-              <img
-                src="/case-study/trax-filter-old-design.svg"
-                alt="Filtered search old design"
-                className="h-auto w-[86%] max-h-[95%] max-w-full object-contain"
-              />
-            </div>
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-              Old Design
-            </span>
-          </div>
-          <div className="group relative h-[500px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-            <div className="flex h-full w-full items-center justify-center gap-4">
+          <MediaFrame label="Old Design">
+            <img
+              src="/case-study/trax-filter-old-design.svg"
+              alt="Filtered search old design"
+              className="h-auto w-[68%] max-w-full object-contain"
+            />
+          </MediaFrame>
+          <MediaFrame label="New Design">
+            <div className="flex w-full items-center justify-center gap-4">
               <img
                 src="/case-study/trax-filter-panels-a.svg"
                 alt="Filtered search new design panel state A"
-                className="h-auto w-[44%] max-w-[44%] object-contain self-center"
+                className="h-auto w-[38%] max-w-[38%] object-contain"
               />
               <img
                 src="/case-study/trax-filter-panels-b.svg"
                 alt="Filtered search new design panel state B"
-                className="h-auto w-[44%] max-w-[44%] object-contain self-center"
+                className="h-auto w-[38%] max-w-[38%] object-contain"
               />
             </div>
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-              New Design
-            </span>
-          </div>
+          </MediaFrame>
         </div>
-        <div className="group relative h-[660px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-          <div className="flex h-full w-full items-center justify-center">
-            <img
-              src="/case-study/trax-quick-access-filters.svg"
-              alt="Quick access filters design"
-              className="h-auto w-[100%] max-h-none max-w-none object-contain scale-[0.76] origin-center"
-            />
-          </div>
-          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-            Quick Access Filters
-          </span>
-        </div>
+        <MediaFrame label="Quick Access Filters" padClassName="px-6 pt-10">
+          <img
+            src="/case-study/trax-quick-access-filters.svg"
+            alt="Quick access filters design"
+            className={mediaImgWide}
+          />
+        </MediaFrame>
       </div>
 
       <div className="pt-12">
@@ -127,30 +133,20 @@ function TraxDecisionsAndScreensContent() {
         </p>
       </div>
       <div className="mt-10 grid grid-cols-1 gap-[25px] md:grid-cols-2">
-        <div className="group relative min-h-[320px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-          <div className="flex h-full min-h-[280px] w-full items-center justify-center">
-            <img
-              src="/case-study/trax-favourites-old-design.png"
-              alt="Library view before a dedicated Favourites section"
-              className="h-auto w-[92%] max-h-[95%] max-w-full object-contain"
-            />
-          </div>
-          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-            Old Design
-          </span>
-        </div>
-        <div className="group relative min-h-[320px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-          <div className="flex h-full min-h-[280px] w-full items-center justify-center">
-            <img
-              src="/case-study/trax-favourites-new-design.svg"
-              alt="Library view with Favourites in the main library"
-              className="h-auto w-[92%] max-h-[95%] max-w-full object-contain"
-            />
-          </div>
-          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-            New Design
-          </span>
-        </div>
+        <MediaFrame label="Old Design">
+          <img
+            src="/case-study/trax-favourites-old-design.png"
+            alt="Library view before a dedicated Favourites section"
+            className={mediaImg}
+          />
+        </MediaFrame>
+        <MediaFrame label="New Design">
+          <img
+            src="/case-study/trax-favourites-new-design.svg"
+            alt="Library view with Favourites in the main library"
+            className={mediaImg}
+          />
+        </MediaFrame>
       </div>
 
       <div className="pt-12">
@@ -160,38 +156,27 @@ function TraxDecisionsAndScreensContent() {
           previous, busier layout.
         </p>
       </div>
-      <div className="mt-10 space-y-[25px] w-full max-w-none">
-        <div className="group relative h-[320px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-          <div className="flex h-full w-full items-center justify-center">
-            <video
-              src="/case-study/trax-search-results-old-loop-upscaled.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="h-auto w-[88%] max-h-[88%] max-w-full object-contain"
-            />
-          </div>
-          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-            Old Design
-          </span>
-        </div>
-        <div className="group relative h-[560px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-12 pb-9">
-          <div className="flex h-full w-full items-center justify-center">
-            <video
-              src="/case-study/trax-bottom-right-loop-upscaled.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="h-auto w-[123%] max-h-[123%] max-w-none object-contain"
-              style={{ clipPath: "inset(40px 0 110px 0)" }}
-            />
-          </div>
-          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-            New Design
-          </span>
-        </div>
+      <div className="mt-10 w-full max-w-none space-y-[25px]">
+        <MediaFrame label="Old Design">
+          <video
+            src="/case-study/trax-search-results-old-loop-upscaled.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="mx-auto block h-auto w-[70%] max-w-full object-contain object-center"
+          />
+        </MediaFrame>
+        <MediaFrame label="New Design">
+          <video
+            src="/case-study/trax-bottom-right-loop-upscaled.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="mx-auto block h-auto w-[78%] max-w-full object-contain object-center"
+          />
+        </MediaFrame>
       </div>
 
       <div className="pt-12">
@@ -201,14 +186,14 @@ function TraxDecisionsAndScreensContent() {
         Together, these updates created a more modern Library UI that improves scanning, simplifies filtering,
         and makes key code references easier to access.
       </p>
-      <div className="mt-10 min-h-[360px] w-full overflow-hidden bg-[#F5F5F5]">
-        <div className="flex h-full w-full items-center justify-center px-[60px] py-[80px]">
+      <div className="mt-10">
+        <MediaFrame padClassName="px-[60px] pt-[80px]">
           <img
             src="/case-study/trax-main-placeholder.svg"
             alt="Final Trax library design"
-            className="h-auto w-[69%] max-w-full object-contain"
+            className="h-auto w-[58%] max-w-full object-contain"
           />
-        </div>
+        </MediaFrame>
       </div>
     </>
   );
@@ -233,15 +218,13 @@ export const traxCaseStudySections: ProjectSection[] = [
       </>
     ),
     customMedia: (
-      <div className="group min-h-[360px] w-full overflow-hidden bg-[#F5F5F5]">
-        <div className="flex h-full w-full items-center justify-center px-[60px] py-[80px]">
-          <img
-            src="/case-study/trax-problem-image-36.svg"
-            alt="Trax problem context visual"
-            className="h-auto w-[80.5%] max-w-full object-contain"
-          />
-        </div>
-      </div>
+      <MediaFrame padClassName="px-[60px] pt-[80px]">
+        <img
+          src="/case-study/trax-problem-image-36.svg"
+          alt="Trax problem context visual"
+          className={mediaImgLg}
+        />
+      </MediaFrame>
     ),
   },
   {
@@ -257,18 +240,13 @@ export const traxCaseStudySections: ProjectSection[] = [
       </>
     ),
     customMedia: (
-      <div className="group relative h-[500px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-        <div className="flex h-full w-full items-center justify-center">
-          <img
-            src="/case-study/trax-current-space-frame-97.svg"
-            alt="Current space design frame"
-            className="h-auto w-[86%] max-h-[95%] max-w-full object-contain"
-          />
-        </div>
-        <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-          Competitor Analysis
-        </span>
-      </div>
+      <MediaFrame label="Competitor Analysis">
+        <img
+          src="/case-study/trax-current-space-frame-97.svg"
+          alt="Current space design frame"
+          className="h-auto w-[68%] max-w-full object-contain"
+        />
+      </MediaFrame>
     ),
   },
   {
@@ -293,42 +271,39 @@ export const traxCaseStudySections: ProjectSection[] = [
     ),
     customMedia: (
       <div className="space-y-[25px]">
-        <div className="group relative h-[620px] w-full overflow-hidden bg-[#F5F5F5] px-6 pt-6 pb-14">
-          <div className="flex h-full w-full items-center justify-center gap-[25px]">
+        <MediaFrame label="SWOT Chart" padClassName="px-8 pt-10">
+          <div className="flex w-full items-center justify-center gap-[25px]">
             <img
               src="/case-study/trax-upcodes-swot.svg"
               alt="UpCodes SWOT analysis"
-              className="h-auto w-[49%] max-h-[96%] max-w-[49%] object-contain"
+              className="h-auto w-[42%] max-w-[42%] object-contain"
             />
             <img
               src="/case-study/trax-trax-swot.svg"
               alt="Trax SWOT analysis"
-              className="h-auto w-[49%] max-h-[96%] max-w-[49%] object-contain"
+              className="h-auto w-[42%] max-w-[42%] object-contain"
             />
           </div>
-          <span className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[14px] font-semibold text-[#ACACAC]">
-            SWOT Chart
-          </span>
-        </div>
+        </MediaFrame>
         <p className="text-[18px] font-semibold text-black">A useful library search should…</p>
         <div className="flex flex-col gap-5 md:flex-row md:gap-5">
-          <div className="flex-1 border border-[#e7e7e7] bg-[#f5f5f5] px-6 py-6">
+          <div className="flex-1 bg-[#f5f5f5] px-6 py-6">
             <h3 className="text-[17px] font-semibold text-black">Use space better</h3>
-            <p className="mt-3 text-[16px] leading-relaxed text-[#4a4a4a]">
+            <p className="mt-3 text-[16px] leading-relaxed text-[#9A9A9A]">
               UpCodes fits more useful information into view, so Trax should tighten layout density without
               hurting readability.
             </p>
           </div>
-          <div className="flex-1 border border-[#e7e7e7] bg-[#f5f5f5] px-6 py-6">
+          <div className="flex-1 bg-[#f5f5f5] px-6 py-6">
             <h3 className="text-[17px] font-semibold text-black">Keep users oriented</h3>
-            <p className="mt-3 text-[16px] leading-relaxed text-[#4a4a4a]">
+            <p className="mt-3 text-[16px] leading-relaxed text-[#9A9A9A]">
               Trax should make filtering and navigation feel predictable so users stay anchored while narrowing
               results.
             </p>
           </div>
-          <div className="flex-1 border border-[#e7e7e7] bg-[#f5f5f5] px-6 py-6">
+          <div className="flex-1 bg-[#f5f5f5] px-6 py-6">
             <h3 className="text-[17px] font-semibold text-black">Prioritize Canadian context</h3>
-            <p className="mt-3 text-[16px] leading-relaxed text-[#4a4a4a]">
+            <p className="mt-3 text-[16px] leading-relaxed text-[#9A9A9A]">
               Unlike UpCodes, Trax can focus deeply on provincial by-laws and become the go-to centralized source
               in Canada.
             </p>
@@ -355,21 +330,21 @@ export const traxCaseStudySections: ProjectSection[] = [
           cards before converging on the directions below.
         </p>
         <div className="mt-6 flex flex-col gap-5 md:flex-row md:gap-5">
-          <div className="flex-1 border border-[#e7e7e7] bg-[#f5f5f5] px-6 py-6">
+          <div className="flex-1 bg-[#f5f5f5] px-6 py-6">
             <h3 className="text-[17px] font-semibold text-black">Card density</h3>
-            <p className="mt-3 text-[16px] leading-relaxed text-[#4a4a4a]">
+            <p className="mt-3 text-[16px] leading-relaxed text-[#9A9A9A]">
               Increase how many library cards fit in view while keeping legibility.
             </p>
           </div>
-          <div className="flex-1 border border-[#e7e7e7] bg-[#f5f5f5] px-6 py-6">
+          <div className="flex-1 bg-[#f5f5f5] px-6 py-6">
             <h3 className="text-[17px] font-semibold text-black">Filter clarity</h3>
-            <p className="mt-3 text-[16px] leading-relaxed text-[#4a4a4a]">
+            <p className="mt-3 text-[16px] leading-relaxed text-[#9A9A9A]">
               Make filtering and quick access feel predictable and in-context.
             </p>
           </div>
-          <div className="flex-1 border border-[#e7e7e7] bg-[#f5f5f5] px-6 py-6">
+          <div className="flex-1 bg-[#f5f5f5] px-6 py-6">
             <h3 className="text-[17px] font-semibold text-black">Result scanning</h3>
-            <p className="mt-3 text-[16px] leading-relaxed text-[#4a4a4a]">
+            <p className="mt-3 text-[16px] leading-relaxed text-[#9A9A9A]">
               Reduce noise in search results so matches are easier to compare.
             </p>
           </div>
@@ -378,30 +353,28 @@ export const traxCaseStudySections: ProjectSection[] = [
     ),
     customMedia: (
       <div className="space-y-[25px]">
-        <div className="min-h-[360px] w-full overflow-hidden bg-[#F5F5F5]">
-          <div className="flex h-full w-full items-center justify-center px-[60px] py-[80px]">
-            <img
-              src="/case-study/trax-ideation-library.svg"
-              alt="Trax ideation library wireframe"
-              className="h-auto w-[80.5%] max-w-full object-contain"
-            />
-          </div>
-        </div>
+        <MediaFrame padClassName="px-[60px] pt-[80px]">
+          <img
+            src="/case-study/trax-ideation-library.svg"
+            alt="Trax ideation library wireframe"
+            className={mediaImgLg}
+          />
+        </MediaFrame>
         <div className="grid grid-cols-1 gap-[25px] md:grid-cols-2">
-          <div className="relative h-[360px] w-full overflow-hidden bg-[#F5F5F5] flex items-center justify-center">
+          <MediaFrame padClassName="px-8 pt-10">
             <img
               src="/case-study/trax-ideation-search-hud-mid-typing.svg"
               alt="Ideation search HUD mid typing"
-              className="h-auto w-[80.5%] max-w-full object-contain"
+              className={mediaImgLg}
             />
-          </div>
-          <div className="relative h-[360px] w-full overflow-hidden bg-[#F5F5F5] flex items-center justify-center">
+          </MediaFrame>
+          <MediaFrame padClassName="px-8 pt-10">
             <img
               src="/case-study/trax-ideation-groupby-library-card.svg"
               alt="Ideation group by dropdown library card"
-              className="h-auto w-[80.5%] max-w-full object-contain"
+              className={mediaImgLg}
             />
-          </div>
+          </MediaFrame>
         </div>
       </div>
     ),
@@ -418,23 +391,23 @@ export const traxCaseStudySections: ProjectSection[] = [
     hasPlaceholder: false,
     content: (
       <div className="flex flex-col gap-5 md:flex-row md:gap-5">
-        <div className="flex-1 border border-[#e7e7e7] bg-[#f5f5f5] px-6 py-6">
+        <div className="flex-1 bg-[#f5f5f5] px-6 py-6">
           <h3 className="text-[17px] font-semibold text-black">Density needs clarity</h3>
-          <p className="mt-3 text-[16px] leading-relaxed text-[#4a4a4a]">
+          <p className="mt-3 text-[16px] leading-relaxed text-[#9A9A9A]">
             Increasing on-screen density only works when hierarchy and type stay calm, so legibility checks were
             essential at smaller card sizes.
           </p>
         </div>
-        <div className="flex-1 border border-[#e7e7e7] bg-[#f5f5f5] px-6 py-6">
+        <div className="flex-1 bg-[#f5f5f5] px-6 py-6">
           <h3 className="text-[17px] font-semibold text-black">Predictability builds trust</h3>
-          <p className="mt-3 text-[16px] leading-relaxed text-[#4a4a4a]">
+          <p className="mt-3 text-[16px] leading-relaxed text-[#9A9A9A]">
             Filter and quick-access patterns mattered as much for confidence as speed because users need to feel
             anchored while narrowing results.
           </p>
         </div>
-        <div className="flex-1 border border-[#e7e7e7] bg-[#f5f5f5] px-6 py-6">
+        <div className="flex-1 bg-[#f5f5f5] px-6 py-6">
           <h3 className="text-[17px] font-semibold text-black">Validate with real tasks</h3>
-          <p className="mt-3 text-[16px] leading-relaxed text-[#4a4a4a]">
+          <p className="mt-3 text-[16px] leading-relaxed text-[#9A9A9A]">
             The next step is task-based usability testing on real code lookup workflows to confirm these
             improvements under practical constraints.
           </p>

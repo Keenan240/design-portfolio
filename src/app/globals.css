@@ -36,3 +36,111 @@
   animation: nucleus-problem-number-reveal 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: transform, opacity, filter;
 }
+
+/* Dark theme overrides for nested case-study content (Nucleus/Trax JSX) */
+.case-study-dark .text-black {
+  color: #ffffff !important;
+}
+.case-study-dark .text-\[\#4a4a4a\],
+.case-study-dark .text-\[\#6a6a6a\],
+.case-study-dark .text-\[\#707070\],
+.case-study-dark .text-\[\#757575\],
+.case-study-dark .text-\[\#9A9A9A\],
+.case-study-dark .text-\[\#9a9a9a\] {
+  color: #b0b0b0 !important;
+}
+.case-study-dark .bg-\[\#F5F5F5\],
+.case-study-dark .bg-\[\#f5f5f5\],
+.case-study-dark .bg-\[\#fafafa\] {
+  background-color: #252525 !important;
+}
+.case-study-dark .border-\[\#e7e7e7\],
+.case-study-dark .border-\[\#ededed\],
+.case-study-dark .border-\[\#DDDDDD\],
+.case-study-dark .border-\[\#d4d4d4\] {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+.case-study-dark .hover\:text-black:hover {
+  color: #ffffff !important;
+}
+
+/* Nucleus accent: slightly lighter purple for dark-mode contrast */
+.case-study-dark .text-\[\#7c3aed\] {
+  color: #a78bfa !important;
+}
+
+/* Trevo accent: slightly brighter blue for dark-mode contrast */
+.case-study-dark .text-\[\#6FA7D6\],
+.case-study-dark .text-\[\#6fa7d6\] {
+  color: #8ec0e8 !important;
+}
+
+/* Hardcoded matte headers used in some case-study JSX */
+.case-study-dark .text-\[\#2A2A2A\],
+.case-study-dark .text-\[\#2a2a2a\] {
+  color: #ffffff !important;
+}
+
+/* Light theme: remap dark-authored greys to readable light-mode contrast */
+.case-study-theme:not(.case-study-dark) .text-\[\#ACACAC\],
+.case-study-theme:not(.case-study-dark) .text-\[\#acacac\] {
+  color: #757575 !important;
+}
+.case-study-theme:not(.case-study-dark) .text-white,
+.case-study-theme:not(.case-study-dark) .text-black {
+  color: #2a2a2a !important;
+}
+.case-study-theme:not(.case-study-dark) .bg-\[\#252525\],
+.case-study-theme:not(.case-study-dark) .bg-\[\#1E1E1E\],
+.case-study-theme:not(.case-study-dark) .bg-\[\#1e1e1e\] {
+  background-color: #f5f5f5 !important;
+}
+.case-study-theme:not(.case-study-dark) .border-white\/10,
+.case-study-theme:not(.case-study-dark) .border-white\/12,
+.case-study-theme:not(.case-study-dark) .border-white\/15 {
+  border-color: #dddddd !important;
+}
+.case-study-theme:not(.case-study-dark) .hover\:text-white:hover {
+  color: #2a2a2a !important;
+}
+
+/* Pull-quote callouts in dark case studies */
+.case-study-dark blockquote.dark-callout {
+  border-left-color: rgba(255, 255, 255, 0.28) !important;
+  color: #b0b0b0 !important;
+}
+
+/* Minimal scrollbar for case study window */
+.case-study-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+
+.case-study-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.case-study-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.case-study-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+}
+
+.case-study-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+.case-study-scroll-light {
+  scrollbar-color: rgba(0, 0, 0, 0.22) transparent;
+}
+
+.case-study-scroll-light::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.22);
+}
+
+.case-study-scroll-light::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.35);
+}

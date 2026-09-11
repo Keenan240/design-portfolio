@@ -74,7 +74,7 @@ export default function TellKeenanPopup() {
 
             {status === "sent" ? (
               <p className="mt-6 text-center text-[#4a4a4a] text-[15px]">
-                Thanks — Keenan&apos;s been notified.
+                Thanks. Keenan&apos;s been notified.
               </p>
             ) : (
               <>

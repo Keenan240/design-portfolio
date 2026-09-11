@@ -1,29 +1,24 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Project } from "@/data/projects";
-import { motion } from "framer-motion";
+import { Clock, Lock } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
+import type { Project } from "@/data/projects";
+import { isCaseStudyLocked } from "@/lib/case-study";
+import { useTheme } from "@/components/ThemeProvider";
 
 interface ProjectCardProps {
   project: Project;
 }
 
-function hexToRgba(hex: string, alpha: number): string {
-  const normalized = hex.replace("#", "");
-  if (normalized.length !== 6) return `rgba(245, 245, 245, ${alpha})`;
-  const r = parseInt(normalized.slice(0, 2), 16);
-  const g = parseInt(normalized.slice(2, 4), 16);
-  const b = parseInt(normalized.slice(4, 6), 16);
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-
-function CardLabelArrow() {
+function CardArrowIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="none"
       aria-hidden
-      className="h-[1em] w-[1em] shrink-0"
+      className="h-6 w-6 shrink-0 md:h-7 md:w-7"
     >
       <path
         d="M7 17L17 7M17 7H7M17 7v10"
@@ -36,112 +31,241 @@ function CardLabelArrow() {
   );
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
-  const isExternal = project.link.startsWith("http");
-  const isCaseStudyLocked =
-    project.id === "trevo" || project.id === "scotia-itrade-coming-soon";
-  const isCompactMockup = project.id === "trevo" || project.id === "scotia-itrade-coming-soon";
-  const isTrevo = project.id === "trevo";
-  const isScotia = project.id === "scotia-itrade-coming-soon";
-  const showCaseStudyLabel =
-    project.id === "nucleus" ||
-    project.id === "trax";
-  const cornerHoverLabel =
-    project.cardHoverLabel ??
-    (isScotia || isTrevo
-      ? "Coming Soon"
-      : project.id === "nucleus" || project.id === "trax"
-        ? "2025"
-        : "");
-  const showOpenProjectArrow = cornerHoverLabel === "Open project";
-  const hoverAccent = hexToRgba(project.hoverAccent, 0.28);
-  const imageClassName = isCompactMockup
-    ? `relative z-10 w-[240px] h-auto object-contain transition-transform duration-300 group-hover:scale-[0.97] ${isTrevo ? "rounded-[40px]" : ""}`
-    : "relative z-10 h-auto max-w-full object-contain transition-transform duration-300 group-hover:scale-[0.97]";
+function CardActionIcon({ project }: { project: Project }) {
+  const icon =
+    project.cardIcon ?? (project.cardLocked ? "lock" : "arrow");
 
-  const contentRect = (
-    <motion.div
-      layoutId={isExternal ? undefined : `project-image-${project.id}`}
-      className="relative isolate flex w-full max-w-[684px] items-center justify-center overflow-hidden bg-[#F5F5F5] py-[80px] px-[60px] transition-transform duration-300 group-hover:scale-[1.01]"
+  if (icon === "lock") {
+    return <Lock className="h-4.5 w-4.5 md:h-5 md:w-5" strokeWidth={2.25} />;
+  }
+
+  if (icon === "clock") {
+    return <Clock className="h-5 w-5 md:h-6 md:w-6" strokeWidth={2.25} />;
+  }
+
+  return <CardArrowIcon />;
+}
+
+function TextCardBody({
+  project,
+  isDark,
+}: {
+  project: Project;
+  isDark: boolean;
+}) {
+  const metaParts = [project.cardLabel, project.cardYear].filter(Boolean);
+  const surface = isDark ? "bg-[#252525]" : "bg-[#F5F5F5]";
+  const title = isDark ? "text-white" : "text-[#2A2A2A]";
+  const muted = isDark ? "text-[#ACACAC]" : "text-[#757575]";
+  const iconBg = isDark
+    ? "bg-[#1E1E1E] text-white"
+    : "bg-white text-[#2A2A2A]";
+
+  return (
+    <div
+      className={`flex h-full min-h-[380px] flex-col overflow-hidden rounded-[30px] p-7 md:min-h-[min(520px,calc(100vh-5.5rem))] md:p-8 ${surface}`}
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 opacity-0 blur-3xl transition-all duration-300 ease-out group-hover:scale-[1.18] group-hover:opacity-100"
-        style={{
-          background: `radial-gradient(circle at 72% 70%, ${hoverAccent} 0%, rgba(245, 245, 245, 0) 72%)`,
-        }}
-      />
-      {isExternal ? (
-        <img
-          src={project.image}
-          alt={project.title}
-          className={imageClassName}
-        />
-      ) : (
-        <motion.img
-          layoutId={`project-img-${project.id}`}
-          src={project.image}
-          alt={project.title}
-          className={imageClassName}
-        />
-      )}
-      {showCaseStudyLabel && (
-        <span className="absolute bottom-[10px] left-[10px] z-20 flex items-center gap-[5px] bg-white px-[6px] py-[4px] text-[14px] tracking-[-0.07em] text-black opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-          Case Study
-          <CardLabelArrow />
-        </span>
-      )}
-      {cornerHoverLabel && (
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0 flex-1">
+          <h3
+            className={`text-[25px] font-semibold leading-snug tracking-[-0.07em] md:text-[27px] ${title}`}
+          >
+            {project.title}
+          </h3>
+          {metaParts.length > 0 && (
+            <p
+              className={`mt-2 text-[15px] font-medium tracking-[-0.07em] md:text-[16px] ${muted}`}
+            >
+              {metaParts.join(" • ")}
+            </p>
+          )}
+        </div>
         <span
-          className={`absolute bottom-[10px] right-[10px] z-20 flex items-center gap-[5px] bg-white px-[6px] py-[4px] text-[14px] tracking-[-0.07em] opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
-            isScotia || isTrevo ? "text-[#ACACAC]" : "text-black"
-          }`}
+          className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full md:h-14 md:w-14 ${iconBg}`}
+          aria-hidden
         >
-          {cornerHoverLabel}
-          {showOpenProjectArrow && <CardLabelArrow />}
+          <CardActionIcon project={project} />
         </span>
-      )}
-    </motion.div>
-  );
+      </div>
 
-  const textBlock = (
-    <div className="w-full max-w-[684px] px-4 py-6">
-      <h3 className="text-[24px] font-bold leading-snug text-black md:text-[28px]">
-        {project.title}
-      </h3>
-      <p className="mt-2 text-[14px] font-normal leading-relaxed text-[#4a4a4a] md:text-[16px]">
+      <p
+        className={`mt-4 text-[17px] font-normal leading-relaxed tracking-[-0.07em] md:text-[19px] ${muted}`}
+      >
         {project.cardOverview ?? project.overview}
       </p>
     </div>
   );
+}
 
-  const inner = (
-    <>
-      {contentRect}
-      {textBlock}
-    </>
-  );
+function MediaCardBody({
+  project,
+  reduceMotion,
+  isDark,
+}: {
+  project: Project;
+  reduceMotion: boolean | null;
+  isDark: boolean;
+}) {
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [scrollRevealed, setScrollRevealed] = useState(false);
+  const revealY = `${project.cardMediaRevealY ?? 26}%`;
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile || reduceMotion || !cardRef.current) {
+      setScrollRevealed(false);
+      return;
+    }
+
+    const el = cardRef.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        const visibleEnough =
+          entry.isIntersecting && entry.intersectionRatio >= 0.45;
+        setScrollRevealed(visibleEnough);
+      },
+      {
+        threshold: [0.2, 0.45, 0.65, 0.85],
+        rootMargin: "-12% 0px -28% 0px",
+      }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isMobile, reduceMotion]);
+
+  const mediaMotion = reduceMotion
+    ? "translate-y-[var(--card-reveal-y)] scale-[0.88]"
+    : isMobile
+      ? `transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          scrollRevealed
+            ? "translate-y-[var(--card-reveal-y)] scale-[0.88]"
+            : "translate-y-0 scale-100"
+        }`
+      : "transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:group-hover:translate-y-[var(--card-reveal-y)] md:group-hover:scale-[0.88]";
+
+  const isVideo = project.cardType === "video" && Boolean(project.cardVideoSrc);
+  const photoSrc = project.cardPhotoSrc ?? project.image;
+  const metaParts = [project.cardLabel, project.cardYear].filter(Boolean);
+  const surface = isDark ? "bg-[#252525]" : "bg-[#F5F5F5]";
+  const title = isDark ? "text-white" : "text-[#2A2A2A]";
+  const muted = isDark ? "text-[#ACACAC]" : "text-[#757575]";
+  const iconBg = isDark
+    ? "bg-[#1E1E1E] text-white"
+    : "bg-white text-[#2A2A2A]";
 
   return (
-    <div className="flex w-full max-w-[684px] flex-col">
-      {isCaseStudyLocked ? (
-        <div className="group block" aria-disabled="true">
-          {inner}
+    <div
+      ref={cardRef}
+      className={`relative min-h-[380px] overflow-hidden rounded-[30px] md:min-h-[min(520px,calc(100vh-5.5rem))] ${surface}`}
+    >
+      <div className="absolute inset-x-0 top-0 z-0 p-7 md:p-8">
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0 flex-1">
+            <h3
+              className={`text-[25px] font-semibold leading-snug tracking-[-0.07em] md:text-[27px] ${title}`}
+            >
+              {project.title}
+            </h3>
+            {metaParts.length > 0 && (
+              <p
+                className={`mt-2 text-[15px] font-medium tracking-[-0.07em] md:text-[16px] ${muted}`}
+              >
+                {metaParts.join(" • ")}
+              </p>
+            )}
+          </div>
+          <span
+            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full md:h-14 md:w-14 ${iconBg}`}
+            aria-hidden
+          >
+            <CardActionIcon project={project} />
+          </span>
         </div>
-      ) : isExternal ? (
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group block"
-        >
-          {inner}
-        </a>
-      ) : (
-        <Link href={project.link} className="group block">
-          {inner}
-        </Link>
-      )}
+      </div>
+
+      <div
+        className={`absolute inset-0 z-10 origin-top overflow-hidden rounded-[30px] ${mediaMotion}`}
+        style={{ ["--card-reveal-y" as string]: revealY }}
+      >
+        {isVideo ? (
+          <video
+            className="h-full w-full object-cover object-center"
+            src={project.cardVideoSrc}
+            poster={photoSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-label={project.title}
+          />
+        ) : (
+          <img
+            src={photoSrc}
+            alt={project.title}
+            className="h-full w-full object-cover"
+          />
+        )}
+      </div>
     </div>
+  );
+}
+
+export default function ProjectCard({ project }: ProjectCardProps) {
+  const reduceMotion = useReducedMotion();
+  const { isDark } = useTheme();
+  const isExternal = project.link.startsWith("http");
+  const locked = isCaseStudyLocked(project);
+  const isMedia =
+    project.cardType === "photo" || project.cardType === "video";
+
+  const inner = isMedia ? (
+    <MediaCardBody
+      project={project}
+      reduceMotion={reduceMotion}
+      isDark={isDark}
+    />
+  ) : (
+    <TextCardBody project={project} isDark={isDark} />
+  );
+
+  const interactiveClass = isDark
+    ? "group block h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1E1E1E]"
+    : "group block h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
+
+  if (locked) {
+    return (
+      <div className="h-full" aria-disabled="true">
+        <div className="group block h-full cursor-default">{inner}</div>
+      </div>
+    );
+  }
+
+  if (isExternal) {
+    return (
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={interactiveClass}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={project.link} className={interactiveClass}>
+      {inner}
+    </Link>
   );
 }

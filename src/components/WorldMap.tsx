@@ -4,29 +4,48 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { travels } from "@/data/travels";
 
-export default function WorldMap() {
+interface WorldMapProps {
+  theme?: "light" | "dark";
+}
+
+export default function WorldMap({ theme = "light" }: WorldMapProps) {
   const [hoveredPin, setHoveredPin] = useState<string | null>(null);
+  const isDark = theme === "dark";
 
   return (
-    <div className="w-full flex flex-col items-center gap-10 mt-32">
+    <div className="mt-24 flex w-full flex-col items-center gap-10 md:mt-32">
       <div className="flex flex-col items-center gap-2">
-        <h2 className="text-[32px] font-medium text-black text-center">
+        <h2
+          className={`text-center text-[28px] font-medium tracking-[-0.07em] md:text-[32px] ${
+            isDark ? "text-white" : "text-[#2A2A2A]"
+          }`}
+        >
           world domination ( ˘▽˘)っ♨
         </h2>
-        <p className="text-[14px] text-[#acacac] uppercase tracking-widest">
-          travel passport — {travels.length} locations
+        <p
+          className={`text-[14px] uppercase tracking-widest ${
+            isDark ? "text-[#ACACAC]" : "text-[#757575]"
+          }`}
+        >
+          travel passport with {travels.length} locations
         </p>
       </div>
 
-      <div className="relative w-full max-w-[1094px] aspect-[1094/650] bg-transparent overflow-visible">
-        {/* World Map Image from User */}
-        <img 
-          src="/world-map.png" 
-          alt="World Map" 
-          className="w-full h-full object-contain opacity-20 grayscale"
+      <div
+        className={`relative aspect-[1094/650] w-full max-w-[1094px] overflow-visible ${
+          isDark ? "bg-[#1E1E1E]" : "bg-transparent"
+        }`}
+      >
+        <img
+          src="/world-map.png"
+          alt="World Map"
+          className={`h-full w-full object-contain grayscale ${
+            isDark
+              ? "opacity-45 invert mix-blend-screen"
+              : "opacity-20"
+          }`}
         />
 
-        {/* Pins */}
         {travels.map((pin) => (
           <div
             key={pin.id}
@@ -36,7 +55,6 @@ export default function WorldMap() {
             onMouseLeave={() => setHoveredPin(null)}
           >
             <div className="relative flex items-center justify-center">
-              {/* Pulse Effect */}
               <motion.div
                 animate={{
                   scale: [1, 2],
@@ -47,35 +65,62 @@ export default function WorldMap() {
                   repeat: Infinity,
                   ease: "easeOut",
                 }}
-                className="absolute w-4 h-4 bg-black rounded-full"
-              />
-              
-              {/* Main Dot */}
-              <motion.div 
-                whileHover={{ scale: 1.5 }}
-                className="w-2 h-2 bg-black rounded-full cursor-pointer relative z-10"
+                className={`absolute h-4 w-4 rounded-full ${
+                  isDark ? "bg-white" : "bg-[#2A2A2A]"
+                }`}
               />
 
-              {/* Tooltip */}
+              <motion.div
+                whileHover={{ scale: 1.5 }}
+                className={`relative z-10 h-2 w-2 cursor-pointer rounded-full ${
+                  isDark ? "bg-white" : "bg-[#2A2A2A]"
+                }`}
+              />
+
               <AnimatePresence>
                 {hoveredPin === pin.id && (
                   <motion.div
                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                    className="absolute bottom-full mb-4 z-20 pointer-events-none"
+                    className="pointer-events-none absolute bottom-full z-20 mb-4"
                   >
-                    <div className="bg-white border border-black px-4 py-2 rounded-lg shadow-xl min-w-[150px]">
-                      <p className="text-sm font-bold text-black">{pin.city}</p>
-                      <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-1">{pin.country}</p>
+                    <div
+                      className={`min-w-[150px] rounded-lg px-4 py-2 shadow-xl ${
+                        isDark
+                          ? "border border-white/15 bg-[#252525]"
+                          : "border border-black bg-white"
+                      }`}
+                    >
+                      <p
+                        className={`text-sm font-semibold ${
+                          isDark ? "text-white" : "text-[#2A2A2A]"
+                        }`}
+                      >
+                        {pin.city}
+                      </p>
+                      <p className="mb-1 text-[10px] uppercase tracking-widest text-[#ACACAC]">
+                        {pin.country}
+                      </p>
                       {pin.story && (
-                        <p className="text-[11px] text-gray-700 italic border-top border-gray-100 pt-1 mt-1">
+                        <p
+                          className={`mt-1 border-t pt-1 text-[11px] italic ${
+                            isDark
+                              ? "border-white/10 text-[#ACACAC]"
+                              : "border-gray-100 text-gray-700"
+                          }`}
+                        >
                           {pin.story}
                         </p>
                       )}
                     </div>
-                    {/* Tooltip Arrow */}
-                    <div className="w-2 h-2 bg-white border-r border-b border-black rotate-45 mx-auto -mt-1" />
+                    <div
+                      className={`mx-auto -mt-1 h-2 w-2 rotate-45 border-r border-b ${
+                        isDark
+                          ? "border-white/15 bg-[#252525]"
+                          : "border-black bg-white"
+                      }`}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -86,4 +131,3 @@ export default function WorldMap() {
     </div>
   );
 }
-

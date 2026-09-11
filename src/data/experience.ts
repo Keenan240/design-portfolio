@@ -7,7 +7,7 @@ export interface ExperienceItem {
 export const experience: ExperienceItem[] = [
   {
     company: "Scotiabank",
-    role: "UX Designer",
+    role: "UX Design Intern",
     year: "2026",
   },
   {
@@ -25,7 +25,7 @@ export const experience: ExperienceItem[] = [
 export const sideStuff: ExperienceItem[] = [
   {
     company: "QTMA",
-    role: "Project Manager",
+    role: "Product Manager",
     year: "2026-27",
   },
   {
@@ -40,7 +40,7 @@ export const sideStuff: ExperienceItem[] = [
   },
   {
     company: "QUX Club",
-    role: "UI/UX Designer",
+    role: "Product Designer",
     year: "2025",
   },
   {

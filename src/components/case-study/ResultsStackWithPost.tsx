@@ -13,39 +13,37 @@ const STACK_IMAGES = [
 
 export default function ResultsStackWithPost() {
   return (
-    <div className="flex justify-center w-full max-w-full overflow-x-auto">
-      <div className="flex flex-row items-center shrink-0" style={{ gap: '102px' }}>
-        <div className="w-[440px] h-[440px] shrink-0">
-          <Stack
-            randomRotation={false}
-            sensitivity={200}
-            sendToBackOnClick={true}
-            cards={STACK_IMAGES.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt={`Nucleus results ${i + 1}`}
-                className="w-full h-full object-cover"
-              />
-            ))}
-            autoplay={false}
-            autoplayDelay={3000}
-            pauseOnHover={false}
-          />
-        </div>
-        <a
-          href={LINKEDIN_POST_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block shrink-0 w-[520px] max-w-[520px]"
-        >
-          <img
-            src="/projects/linkedin-post.png"
-            alt="LinkedIn post - First Demo Day Win"
-            className="rounded-2xl border border-[#DDDDDD] w-full h-auto object-contain"
-          />
-        </a>
+    <div className="flex w-full max-w-full flex-col items-center justify-center gap-14 overflow-hidden sm:flex-row sm:items-center sm:gap-16 lg:gap-24">
+      <div className="aspect-square w-full max-w-[320px] shrink sm:max-w-[min(100%,340px)] lg:max-w-[360px]">
+        <Stack
+          randomRotation={false}
+          sensitivity={200}
+          sendToBackOnClick={true}
+          cards={STACK_IMAGES.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              alt={`Nucleus results ${i + 1}`}
+              className="h-full w-full object-cover"
+            />
+          ))}
+          autoplay={false}
+          autoplayDelay={3000}
+          pauseOnHover={false}
+        />
       </div>
+      <a
+        href={LINKEDIN_POST_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block w-full max-w-[380px] shrink sm:max-w-[min(100%,400px)] lg:max-w-[420px]"
+      >
+        <img
+          src="/projects/linkedin-post.png"
+          alt="LinkedIn post - First Demo Day Win"
+          className="h-auto w-full rounded-2xl border border-[#DDDDDD] object-contain"
+        />
+      </a>
     </div>
   );
 }

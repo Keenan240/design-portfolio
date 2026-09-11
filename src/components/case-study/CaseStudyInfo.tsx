@@ -11,18 +11,18 @@ export default function CaseStudyInfo({ project }: CaseStudyInfoProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Top Row: Role and Timeline */}
           <div className="bg-[#f5f5f5] rounded-[25px] p-8 border border-[#ededed]">
-            <h4 className="text-[14px] font-bold text-[#acacac] uppercase tracking-wider mb-4">Role</h4>
+            <h4 className="text-[14px] font-semibold text-[#acacac] uppercase tracking-wider mb-4">Role</h4>
             <p className="text-[20px] text-black font-semibold">{project.role}</p>
           </div>
           
           <div className="bg-[#f5f5f5] rounded-[25px] p-8 border border-[#ededed]">
-            <h4 className="text-[14px] font-bold text-[#acacac] uppercase tracking-wider mb-4">Timeline</h4>
+            <h4 className="text-[14px] font-semibold text-[#acacac] uppercase tracking-wider mb-4">Timeline</h4>
             <p className="text-[20px] text-black font-semibold">{project.timeline}</p>
           </div>
 
           {/* Bottom Row: Team and Skills */}
           <div className="bg-[#f5f5f5] rounded-[25px] p-8 border border-[#ededed]">
-            <h4 className="text-[14px] font-bold text-[#acacac] uppercase tracking-wider mb-4">Team</h4>
+            <h4 className="text-[14px] font-semibold text-[#acacac] uppercase tracking-wider mb-4">Team</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
               {project.team.map((member) => (
                 <p key={member} className="text-[16px] text-[#4a4a4a] font-medium">
@@ -33,7 +33,7 @@ export default function CaseStudyInfo({ project }: CaseStudyInfoProps) {
           </div>
 
           <div className="bg-[#f5f5f5] rounded-[25px] p-8 border border-[#ededed]">
-            <h4 className="text-[14px] font-bold text-[#acacac] uppercase tracking-wider mb-4">Skills</h4>
+            <h4 className="text-[14px] font-semibold text-[#acacac] uppercase tracking-wider mb-4">Skills</h4>
             <div className="flex flex-wrap gap-2">
               {project.skills.map((skill) => (
                 <span 

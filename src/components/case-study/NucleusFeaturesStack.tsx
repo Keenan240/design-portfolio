@@ -64,11 +64,11 @@ function StackCardVideo({
 
 const cardClassName = "flex flex-col w-full";
 
-const cardRevealInitial = { opacity: 0, y: 28 };
+const cardRevealInitial = { opacity: 0, y: 14 };
 const cardRevealInView = { opacity: 1, y: 0 };
 const cardRevealTransition = (delay: number) => ({
-  duration: 0.6,
-  ease: [0.22, 1, 0.36, 1] as const,
+  duration: 0.55,
+  ease: "easeOut" as const,
   delay,
 });
 
@@ -86,7 +86,7 @@ function FeatureMediaStack({
           <StackCardVideo
             src={videoSrc}
             wrapperClassName="w-full flex items-center justify-center"
-            className="w-[72%] max-w-full h-auto object-contain border border-[#DDDDDD] block"
+            className="mx-auto block h-auto w-[72%] max-w-full object-contain object-center border border-[#DDDDDD]"
           />
         </div>
       </div>
@@ -115,8 +115,8 @@ export default function NucleusFeaturesStack() {
         viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
         transition={cardRevealTransition(0)}
       >
-        <h3 className="text-[22px] font-semibold text-black">Syllabus Scanner</h3>
-        <p className="text-[20px] text-[#4a4a4a] leading-relaxed text-left">
+        <h3 className="text-[24px] font-semibold text-black">Syllabus Scanner</h3>
+        <p className="text-[20px] text-[#9A9A9A] leading-relaxed text-left">
           The Syllabus Scanner extracts deadlines, grading weights, and course logistics from uploaded syllabi so students start with a structured system instead of spending time on manual setup.
         </p>
         <FeatureMediaStack
@@ -132,8 +132,8 @@ export default function NucleusFeaturesStack() {
         viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
         transition={cardRevealTransition(0.06)}
       >
-        <h3 className="text-[22px] font-semibold text-black">Classes Page</h3>
-        <p className="text-[20px] text-[#4a4a4a] leading-relaxed text-left">
+        <h3 className="text-[24px] font-semibold text-black">Classes Page</h3>
+        <p className="text-[20px] text-[#9A9A9A] leading-relaxed text-left">
           The Classes Page centralizes course timelines, grading context, and policies in one place so students can stay oriented by class without jumping across multiple tools.
         </p>
         <div className="mt-[40px] space-y-[25px]">
@@ -142,7 +142,7 @@ export default function NucleusFeaturesStack() {
               <StackCardVideo
                 src="/projects/classes-page-demo.mp4"
                 wrapperClassName="w-full flex items-center justify-center"
-                className="w-[72%] max-w-full h-auto object-contain border border-[#DDDDDD] block"
+                className="mx-auto block h-auto w-[72%] max-w-full object-contain object-center border border-[#DDDDDD]"
               />
             </div>
           </div>
@@ -156,8 +156,8 @@ export default function NucleusFeaturesStack() {
         viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
         transition={cardRevealTransition(0.12)}
       >
-        <h3 className="text-[22px] font-semibold text-black">Weekly View</h3>
-        <p className="text-[20px] text-[#4a4a4a] leading-relaxed text-left">
+        <h3 className="text-[24px] font-semibold text-black">Weekly View</h3>
+        <p className="text-[20px] text-[#9A9A9A] leading-relaxed text-left">
           Weekly View places tasks on a visual timeline so students can see workload by day and turn deadlines into a clearer plan for immediate execution.
         </p>
         <div className="mt-[40px] space-y-[25px]">
@@ -166,8 +166,8 @@ export default function NucleusFeaturesStack() {
               <StackCardVideo
                 src="/projects/weekly-view-demo.mp4"
                 wrapperClassName="w-full flex items-center justify-center"
-                className="w-[72%] max-w-full h-auto object-contain border border-[#DDDDDD] block"
-                style={{ clipPath: "inset(30px 10px 0 10px)" }}
+                className="mx-auto block h-auto w-[72%] max-w-full object-contain object-center border border-[#DDDDDD]"
+                style={{ clipPath: "inset(20px 10px)" }}
               />
             </div>
           </div>
@@ -181,26 +181,26 @@ export default function NucleusFeaturesStack() {
         viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
         transition={cardRevealTransition(0.18)}
       >
-        <h3 className="text-[22px] font-semibold text-black">Sub-Deadlines</h3>
-        <p className="text-[20px] text-[#4a4a4a] leading-relaxed text-left">
+        <h3 className="text-[24px] font-semibold text-black">Sub-Deadlines</h3>
+        <p className="text-[20px] text-[#9A9A9A] leading-relaxed text-left">
           Sub-Deadlines break large assessments into smaller checkpoints across time, helping students start earlier and make steady progress instead of cramming near due dates.
         </p>
         <div className="mt-[40px] grid grid-cols-2 gap-[25px]">
           <div className="w-full overflow-hidden bg-[#F5F5F5]">
-            <div className="flex h-full w-full items-center justify-center px-[60px] py-[80px]">
+            <div className="flex w-full items-center justify-center px-[60px] py-[80px]">
               <StackCardVideo
                 src="/projects/sub-deadlines-demo.mp4"
                 wrapperClassName="w-full flex items-center justify-center"
-                className="w-[82%] max-w-full h-auto object-contain border border-[#DDDDDD] block"
+                className="mx-auto block h-auto w-[82%] max-w-full object-contain object-center border border-[#DDDDDD]"
               />
             </div>
           </div>
           <div className="w-full overflow-hidden bg-[#F5F5F5]">
-            <div className="flex h-full w-full items-center justify-center px-[60px] py-[80px]">
+            <div className="flex w-full items-center justify-center px-[48px] py-[64px]">
               <img
                 src="/case-study/nucleus-sub-deadlines-frame-53.svg"
                 alt="Sub-deadlines supporting frame"
-                className="w-[108%] max-w-none h-auto object-contain block"
+                className="mx-auto block h-auto w-full max-w-full object-contain object-center"
               />
             </div>
           </div>
