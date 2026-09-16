@@ -22,6 +22,10 @@ export default function CaseStudyHero({
   const mutedClass = isDark ? "text-[#ACACAC]" : "text-[#A3A3A3]";
   const headline = project.heroTitle ?? project.title;
   const isActionHeadline = Boolean(project.heroTitle);
+  const isPhoneOverviewVideo =
+    (project.id === "trevo" ||
+      project.id === "scotiabank-unreleased-feature") &&
+    Boolean(project.overviewVideo);
 
   return (
     <section className={compact ? "pb-8 pt-6" : "pb-8 pt-28"}>
@@ -87,10 +91,10 @@ export default function CaseStudyHero({
             transition={{ duration: 0.5, delay: 0.05 }}
             whileHover={{ scale: 1.01 }}
             className={`group w-full overflow-hidden ${surfaceClass} ${
-              project.id === "trevo" ? "relative min-h-[560px]" : "min-h-[360px]"
+              isPhoneOverviewVideo ? "relative min-h-[560px]" : "min-h-[360px]"
             }`}
           >
-            {project.id === "trevo" && project.overviewVideo ? (
+            {isPhoneOverviewVideo ? (
               <div className="flex h-full min-h-[560px] w-full items-center justify-center px-[60px] py-[64px]">
                 <div className="w-[230px] max-w-full overflow-hidden rounded-[40px] transition-transform duration-300 group-hover:scale-[0.97]">
                   <video
@@ -99,7 +103,13 @@ export default function CaseStudyHero({
                     loop
                     muted
                     playsInline
+                    preload="auto"
                     className="block h-auto w-full object-contain object-center"
+                    onEnded={(e) => {
+                      const video = e.currentTarget;
+                      video.currentTime = 0;
+                      void video.play();
+                    }}
                   />
                 </div>
               </div>
@@ -130,7 +140,11 @@ export default function CaseStudyHero({
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              whileHover={{ scale: 1.01 }}
+              whileHover={
+                project.id === "scotiabank-unreleased-feature"
+                  ? undefined
+                  : { scale: 1.01 }
+              }
               className={`group relative h-[380px] w-full overflow-hidden ${surfaceClass}`}
             >
               {project.id === "nucleus" && (
@@ -157,6 +171,15 @@ export default function CaseStudyHero({
                     src="/case-study/trevo-bottom-left.png"
                     alt="Trevo wordmark"
                     className="h-auto w-[72%] max-w-[280px] object-contain transition-transform duration-300 group-hover:scale-[1.04]"
+                  />
+                </div>
+              )}
+              {project.id === "scotiabank-unreleased-feature" && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div
+                    className="scotia-flying-s h-[132px] w-[132px] md:h-[152px] md:w-[152px]"
+                    role="img"
+                    aria-label="Scotiabank"
                   />
                 </div>
               )}
@@ -193,6 +216,15 @@ export default function CaseStudyHero({
                     src="/case-study/trevo-bottom-right.png"
                     alt="Trevo itinerary place cards"
                     className="h-auto max-h-full w-[88%] max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.04]"
+                  />
+                </div>
+              )}
+              {project.id === "scotiabank-unreleased-feature" && (
+                <div className="absolute inset-0 flex items-center justify-center px-8 py-8 md:px-10 md:py-10">
+                  <img
+                    src="/case-study/scotia-overview-trust-card.png"
+                    alt="Trust this location card"
+                    className="h-auto max-h-[78%] w-full max-w-[320px] object-contain transition-transform duration-300 group-hover:scale-[1.03]"
                   />
                 </div>
               )}

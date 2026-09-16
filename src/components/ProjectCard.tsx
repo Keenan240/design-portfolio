@@ -2,11 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Clock, Lock } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
 import type { Project } from "@/data/projects";
-import { isCaseStudyLocked } from "@/lib/case-study";
+import { isCaseStudyLocked, isPasscodeGated } from "@/lib/case-study";
 import { useTheme } from "@/components/ThemeProvider";
+import PasscodeGate from "@/components/case-study/PasscodeGate";
+import { readPasscodeUnlock } from "@/lib/passcode";
 
 interface ProjectCardProps {
   project: Project;
@@ -206,6 +209,7 @@ function MediaCardBody({
             muted
             loop
             playsInline
+            preload="auto"
             aria-label={project.title}
           />
         ) : (
@@ -223,8 +227,11 @@ function MediaCardBody({
 export default function ProjectCard({ project }: ProjectCardProps) {
   const reduceMotion = useReducedMotion();
   const { isDark } = useTheme();
+  const router = useRouter();
+  const [passcodeOpen, setPasscodeOpen] = useState(false);
   const isExternal = project.link.startsWith("http");
   const locked = isCaseStudyLocked(project);
+  const passcodeGated = isPasscodeGated(project);
   const isMedia =
     project.cardType === "photo" || project.cardType === "video";
 
@@ -241,6 +248,36 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   const interactiveClass = isDark
     ? "group block h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#1E1E1E]"
     : "group block h-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-2 focus-visible:ring-offset-white";
+
+  if (passcodeGated) {
+    return (
+      <div className="h-full">
+        <button
+          type="button"
+          className={`${interactiveClass} w-full appearance-none border-0 bg-transparent p-0 text-left`}
+          onClick={() => {
+            if (readPasscodeUnlock(project.id)) {
+              router.push(project.link);
+              return;
+            }
+            setPasscodeOpen(true);
+          }}
+        >
+          {inner}
+        </button>
+        <PasscodeGate
+          open={passcodeOpen}
+          projectId={project.id}
+          caseStudyTitle={project.title}
+          onClose={() => setPasscodeOpen(false)}
+          onSuccess={() => {
+            setPasscodeOpen(false);
+            router.push(project.link);
+          }}
+        />
+      </div>
+    );
+  }
 
   if (locked) {
     return (

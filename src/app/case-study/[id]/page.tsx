@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import CaseStudyPageView from "@/components/case-study/CaseStudyPageView";
-import { getOpenableCaseStudy } from "@/lib/case-study";
+import CaseStudyAccess from "@/components/case-study/CaseStudyAccess";
+import { getCaseStudyForRoute } from "@/lib/case-study";
 
 interface PageProps {
   params: {
@@ -9,11 +9,11 @@ interface PageProps {
 }
 
 export default function CaseStudyPage({ params }: PageProps) {
-  const project = getOpenableCaseStudy(params.id);
+  const project = getCaseStudyForRoute(params.id);
 
   if (!project) {
     notFound();
   }
 
-  return <CaseStudyPageView project={project} />;
+  return <CaseStudyAccess project={project} />;
 }

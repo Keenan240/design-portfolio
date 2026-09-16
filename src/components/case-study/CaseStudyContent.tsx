@@ -5,6 +5,7 @@ import { resolveCaseStudySections } from "@/lib/case-study";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import CaseStudySection from "@/components/case-study/CaseStudySection";
 import CaseStudyNav from "@/components/case-study/CaseStudyNav";
+import NextCaseStudyFooter from "@/components/case-study/NextCaseStudyFooter";
 import type { RefObject } from "react";
 
 interface CaseStudyContentProps {
@@ -81,6 +82,11 @@ export default function CaseStudyContent({
                 )}
               </CaseStudySection>
             ))}
+
+            <NextCaseStudyFooter
+              currentProjectId={project.id}
+              theme={theme}
+            />
           </div>
         </div>
       </div>

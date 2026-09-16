@@ -5,6 +5,8 @@ import {
 } from "@/data/projects";
 import { traxCaseStudySections } from "@/data/trax-case-study-sections";
 import { trevoCaseStudySections } from "@/data/trevo-case-study-sections";
+import { scotiaCaseStudySections } from "@/data/scotia-case-study-sections";
+import { SCOTIA_PASSCODE_PROJECT_ID } from "@/lib/passcode";
 
 const defaultPlaceholderSections: CaseStudySection[] = [
   {
@@ -44,13 +46,27 @@ const defaultPlaceholderSections: CaseStudySection[] = [
   },
 ];
 
+/** Projects that open via OTP modal instead of a hard lock. */
+export function isPasscodeGated(project: Project): boolean {
+  return project.id === SCOTIA_PASSCODE_PROJECT_ID;
+}
+
+/** Hard-locked: non-interactive home cards (no navigation / no gate). */
 export function isCaseStudyLocked(project: Project): boolean {
+  if (isPasscodeGated(project)) return false;
   return (
     project.cardLocked === true ||
     project.id === "trevo" ||
-    project.id === "scotia-itrade-coming-soon" ||
-    project.id === "scotiabank-unreleased-feature"
+    project.id === "scotia-itrade-coming-soon"
   );
+}
+
+/** Resolves a project for the case-study route (includes passcode-gated). */
+export function getCaseStudyForRoute(id: string): Project | undefined {
+  const project = projects.find((p) => p.id === id);
+  if (!project || project.link.startsWith("http")) return undefined;
+  if (isCaseStudyLocked(project)) return undefined;
+  return project;
 }
 
 export function getOpenableCaseStudy(id: string): Project | undefined {
@@ -58,12 +74,14 @@ export function getOpenableCaseStudy(id: string): Project | undefined {
   if (!project || isCaseStudyLocked(project) || project.link.startsWith("http")) {
     return undefined;
   }
+  if (isPasscodeGated(project)) return undefined;
   return project;
 }
 
 export function resolveCaseStudySections(project: Project): CaseStudySection[] {
   if (project.id === "trax") return traxCaseStudySections;
   if (project.id === "trevo") return trevoCaseStudySections;
+  if (project.id === SCOTIA_PASSCODE_PROJECT_ID) return scotiaCaseStudySections;
   if (project.id === "scotia-itrade-coming-soon") return defaultPlaceholderSections;
   return project.sections;
 }

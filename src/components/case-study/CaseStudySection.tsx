@@ -40,10 +40,10 @@ export default function CaseStudySection({
   const mutedClass = isDark ? "text-[#ACACAC]" : "text-[#757575]";
 
   return (
-    <motion.section
+    <section
       id={id}
       ref={ref}
-      className="mx-0 w-full max-w-none px-0 py-14"
+      className="mx-0 w-full max-w-none px-0 py-20 md:py-24"
     >
       {!hideTitle && (
         <motion.h2
@@ -51,20 +51,16 @@ export default function CaseStudySection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.55, ease: "easeOut" }}
-          className={`mb-3 text-[32px] font-semibold ${titleClass}`}
+          className={`mb-8 text-[32px] font-semibold leading-tight tracking-[-0.07em] md:mb-10 md:text-[36px] ${titleClass}`}
         >
           {title}
         </motion.h2>
       )}
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.55, ease: "easeOut", delay: 0.06 }}
-        className={`space-y-4 text-[20px] leading-relaxed [&>*:first-child]:mt-0 [&>*:first-child]:pt-0 ${bodyClass}`}
+      <div
+        className={`space-y-5 text-[18px] leading-[1.7] tracking-[-0.02em] md:text-[19px] [&>*:first-child]:mt-0 [&>*:first-child]:pt-0 ${bodyClass}`}
       >
         {children}
-      </motion.div>
+      </div>
 
       {(customMedia || image || video || hasPlaceholder) && (
         <motion.div
@@ -72,7 +68,7 @@ export default function CaseStudySection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.55, ease: "easeOut", delay: 0.1 }}
-          className={mediaTopSpacing === 64 ? "mt-[64px] w-full" : "mt-6 w-full"}
+          className={mediaTopSpacing === 64 ? "mt-[64px] w-full" : "mt-10 w-full"}
         >
           {customMedia ? (
             customMedia
@@ -126,6 +122,6 @@ export default function CaseStudySection({
           )}
         </motion.div>
       )}
-    </motion.section>
+    </section>
   );
 }
