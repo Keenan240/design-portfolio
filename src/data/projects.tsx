@@ -79,7 +79,7 @@ export const projects: Project[] = [
     team: ["Trust team"],
     skills: ["Product Design", "UX Design"],
     overview:
-      "Trusted Locations lets clients skip extra verification in places they've marked as safe, cutting 2SV friction in low-risk environments.",
+      "For my summer intern project at Scotiabank I worked on a new location-based security feature called Trusted Locations. This feature lets clients skip extra verification in places they've marked as safe, cutting 2SV friction in low-risk environments.",
     cardOverview:
       "A passcode-locked case study on Trusted Locations, a feature that reduces step-ups where clients feel safe to bank.",
     cardType: "photo",
