@@ -69,6 +69,10 @@ export default function CaseStudyPageView({ project }: CaseStudyPageViewProps) {
 
   const mutedText = isDark ? "text-[#ACACAC]" : "text-[#757575]";
   const primaryText = isDark ? "text-white" : "text-[#2A2A2A]";
+  const chromeTitle =
+    project.id === "scotiabank-unreleased-feature"
+      ? "Trusted Locations"
+      : project.title;
 
   return (
     <div
@@ -116,7 +120,7 @@ export default function CaseStudyPageView({ project }: CaseStudyPageViewProps) {
                 <p
                   className={`truncate text-[20px] font-semibold tracking-[-0.07em] md:text-[22px] ${primaryText}`}
                 >
-                  {project.title}
+                  {chromeTitle}
                 </p>
               </div>
             </div>
@@ -171,7 +175,7 @@ export default function CaseStudyPageView({ project }: CaseStudyPageViewProps) {
               <p
                 className={`truncate text-[15px] font-semibold leading-tight tracking-[-0.07em] md:text-[16px] ${primaryText}`}
               >
-                {project.title}
+                {chromeTitle}
               </p>
             </button>
           </div>
